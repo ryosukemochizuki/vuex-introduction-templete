@@ -3,7 +3,9 @@
   <HelloWorld msg="Welcome to Your Vue.js App" />
   <p>count: {{ count }}</p>
   <p>double-count: {{ double }}</p>
-  <button @click="countUp">押す</button>
+  <p>hello: {{ message }}</p>
+  <button @click="countUp">+1</button>
+  <button @click="asyncSayHi">hello</button>
 </template>
 
 <script>
@@ -19,9 +21,13 @@ export default {
   setup() {
     const store = useStore();
     return {
+      // stateとgettersを呼び出す時は、computedでラップします
       count: computed(() => store.state.count),
+      message: computed(() => store.state.message),
       double: computed(() => store.getters.double),
-      countUp: () => store.dispatch("sayHi"),
+      // mitetionsとactionsは関数の返り値として記述します
+      countUp: () => store.dispatch("countUp"),
+      asyncSayHi: () => store.dispatch("asyncSayHi"),
     };
   },
 };
